@@ -7,6 +7,7 @@ public class PlayerLocomotion : MonoBehaviour
     InputManager inputManager;
     Transform cameraTransform;
     Rigidbody playerRigidbody;
+    AnimatorManager animatorManager;
 
     public float movementSpeed = 350f;
     public float rotateSpeed = 15f;
@@ -17,6 +18,12 @@ public class PlayerLocomotion : MonoBehaviour
         inputManager = GetComponent<InputManager>();
         cameraTransform = Camera.main.transform;
         playerRigidbody = GetComponent<Rigidbody>();
+        animatorManager = GetComponent<AnimatorManager>();
+    }
+
+    public void HandleMovementAnimation()
+    {
+        animatorManager.UpdateAnimatorValue(inputManager.movementAmount);
     }
 
     public void HandleMovement()

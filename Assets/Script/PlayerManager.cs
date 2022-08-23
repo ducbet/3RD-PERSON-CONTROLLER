@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-
     PlayerLocomotion playerLocomotion;
 
     // Start is called before the first frame update
@@ -16,5 +15,6 @@ public class PlayerManager : MonoBehaviour
     private void FixedUpdate()
     {
         playerLocomotion.HandleMovement();
+        playerLocomotion.HandleMovementAnimation();
     }
 }
