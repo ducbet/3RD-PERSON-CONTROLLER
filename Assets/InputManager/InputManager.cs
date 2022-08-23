@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour
     public Vector2 movementInput;
     public float verticalInput { get; private set; }
     public float horizontalInput { get; private set; }
+    public float movementAmount { get; private set; }
 
 
     private void OnEnable()
@@ -22,6 +23,8 @@ public class InputManager : MonoBehaviour
                 movementInput = context.ReadValue<Vector2>();
                 verticalInput = movementInput.y;
                 horizontalInput = movementInput.x;
+                //movementAmount = Mathf.Clamp01(Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
+                movementAmount = movementInput.magnitude;
             };
         }
         playerControls.Enable();
