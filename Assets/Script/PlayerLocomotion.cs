@@ -10,7 +10,7 @@ public class PlayerLocomotion : MonoBehaviour
     AnimatorManager animatorManager;
 
     public float movementSpeed = 350f;
-    public float rotateSpeed = 15f;
+    public float rotateSpeed = 5f;
     private Vector3 direction;
 
     private void Awake()
