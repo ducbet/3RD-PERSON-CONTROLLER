@@ -6,7 +6,7 @@ public class AnimatorManager : MonoBehaviour
 {
     Animator animator;
 
-    int verticalAnimatorIndex;
+    private int verticalAnimatorIndex;
 
     private void Awake()
     {
@@ -14,29 +14,9 @@ public class AnimatorManager : MonoBehaviour
         verticalAnimatorIndex = Animator.StringToHash("Vertical");
     }
 
-    public void UpdateAnimatorValue(float vertical)
+    public void UpdateAnimatorValue(PlayerLocomotion.MovementState movementStatus)
     {
-        animator.SetFloat(verticalAnimatorIndex, SnapFloatValue(vertical), 0.1f, Time.deltaTime);
+        animator.SetFloat(verticalAnimatorIndex, (float) movementStatus, 0.1f, Time.deltaTime);
     }
 
-    private float SnapFloatValue(float val)
-    {
-        if (val > .55f)
-        {
-            return 1f;
-        }
-        else if (val > 0)
-        {
-            return .5f;
-        }
-        else if (val < -.55f)
-        {
-            return -1f;
-        }
-        else if (val < 0)
-        {
-            return -.5f;
-        }
-        return 0;
-    }
 }

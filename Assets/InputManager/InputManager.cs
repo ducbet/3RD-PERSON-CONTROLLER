@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour
     public PlayerControls playerControls;
 
     public Vector2 movementInput;
+    public bool isSprinting;
     public float verticalInput { get; private set; }
     public float horizontalInput { get; private set; }
     public float movementAmount { get; private set; }
@@ -30,6 +31,9 @@ public class InputManager : MonoBehaviour
                 //movementAmount = Mathf.Clamp01(Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
                 movementAmount = movementInput.magnitude;
             };
+            playerControls.PlayerMovement.Sprint.performed += context => isSprinting = true;
+            playerControls.PlayerMovement.Sprint.canceled += context => isSprinting = false;
+
             playerControls.CameraMovement.Rotation.performed += context =>
             {
                 cameraInput = context.ReadValue<Vector2>();

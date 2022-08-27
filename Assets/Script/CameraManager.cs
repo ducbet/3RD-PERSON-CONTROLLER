@@ -9,7 +9,7 @@ public class CameraManager : MonoBehaviour
     [Header("Rotate attributes")]
     public float cameraRotationSpeed = 5f;
     public float minimumVerticalAngle = -3f;
-    public float maximumVerticalAngle = 10f;
+    public float maximumVerticalAngle = 20f;
     [Header("Handle collision attributes")]
     public float spherecastThickness = 0.3f;
     public LayerMask layerMask;
