@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Materials/Wall.mat.meta
-guid: 781f4b3512d51c343a7944100a17d14a
-========
 guid: a2b5d4fb146102f499d0170b6bdee2d6
->>>>>>>> 388a8fb (ep6 - FALLING & LANDING):Assets/Materials/Platform.mat.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000
