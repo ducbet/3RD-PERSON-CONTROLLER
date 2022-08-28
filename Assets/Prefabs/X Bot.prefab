@@ -1322,7 +1322,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 112
@@ -1339,6 +1339,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13acec16bc4b9af43b8804d3d33d9cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveVerticalName: Vertical
+  isInteractingName: IsInteracting
+  fallingAnimation: Falling
+  landingAnimation: Landing
 --- !u!114 &5355499669370881846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1368,6 +1372,13 @@ MonoBehaviour:
   sprintingSpeed: 350
   rotateSpeed: 5
   runningThreshold: 0.55
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  fallingVelocity: 33
+  leapingVelocity: 3
+  leapingVelocitySmoothTime: 1
+  startLandingHeight: 0.5
 --- !u!114 &5355499669370881848
 MonoBehaviour:
   m_ObjectHideFlags: 0
