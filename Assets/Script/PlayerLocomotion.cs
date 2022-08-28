@@ -51,7 +51,7 @@ public class PlayerLocomotion : MonoBehaviour
 
     public void HandleMovementAnimation()
     {
-        animatorManager.UpdateAnimatorValue(GetMovementState(inputManager.movementAmount, inputManager.isSprinting));
+        animatorManager.UpdateAnimatorValue(GetMovementState());
     }
 
     public void HandleMovement()
@@ -77,7 +77,7 @@ public class PlayerLocomotion : MonoBehaviour
 
     private void HandleTranslation()
     {
-        float speed = GetMovementSpeed(GetMovementState(inputManager.movementAmount, inputManager.isSprinting));
+        float speed = GetMovementSpeed(GetMovementState());
         playerRigidbody.velocity = direction * speed * Time.deltaTime;
     }
 
@@ -158,17 +158,24 @@ public class PlayerLocomotion : MonoBehaviour
         return 0;
     }
 
-    private MovementState GetMovementState(float val, bool isSprinting)
+    private MovementState GetMovementState()
     {
-        if (val > runningThreshold)
+        float movementAmout = inputManager.movementAmount;
+        bool isSprinting = inputManager.isSprinting;
+        bool isWalking = inputManager.isWalking;
+        if (movementAmout > runningThreshold)
         {
             if (isSprinting)
             {
                 return MovementState.Sprinting;
             }
+            if (isWalking)
+            {
+                return MovementState.Walking;
+            }
             return MovementState.Running;
         }
-        else if (val > 0)
+        else if (movementAmout > 0)
         {
             return MovementState.Walking;
         }

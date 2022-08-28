@@ -20,6 +20,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Walk",
+                    "type": "Button",
+                    "id": "c3b6a2b1-c5bc-4de4-8d6f-21e3ba584445",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -152,6 +160,17 @@
                     "processors": "",
                     "groups": "KeybroadAndMouse",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5aabca17-e229-4081-a354-3493d1bbc676",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeybroadAndMouse",
+                    "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

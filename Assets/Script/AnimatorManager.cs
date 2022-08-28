@@ -18,7 +18,6 @@ public class AnimatorManager : MonoBehaviour
 
     private float fadeLength = 0.2f;
 
-
     private void Awake()
     {
         animator = GetComponent<Animator>();
