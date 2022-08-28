@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     [Header("Movement attributes")]
-    public float cameraSmoothTime = 0.2f;
+    public float cameraSmoothTime = 0.1f;
     [Header("Rotate attributes")]
     public float cameraRotationSpeed = 5f;
     public float minimumVerticalAngle = -3f;
