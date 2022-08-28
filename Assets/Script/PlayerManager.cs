@@ -4,17 +4,28 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    CameraManager cameraManager;
     PlayerLocomotion playerLocomotion;
 
     // Start is called before the first frame update
     void Awake()
     {
         playerLocomotion = GetComponent<PlayerLocomotion>();
+        cameraManager = FindObjectOfType<CameraManager>();
+    }
+
+    private void Update()
+    {
+        playerLocomotion.HandleMovementAnimation();
     }
 
     private void FixedUpdate()
     {
         playerLocomotion.HandleMovement();
-        playerLocomotion.HandleMovementAnimation();
+    }
+
+    private void LateUpdate()
+    {
+        cameraManager.HandleCameraAllMovement();
     }
 }
