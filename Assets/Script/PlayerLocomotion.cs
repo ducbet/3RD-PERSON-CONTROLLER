@@ -31,11 +31,13 @@ public class PlayerLocomotion : MonoBehaviour
     private bool isForwardJump = false;  // Do not play landing animatioin if jump forward
 
     public float fallingVelocity = 33f;
+    private float standSmoothTime = 0.05f;
+    private float standVelocitySmoothY;
     private Vector3 leapingVelocity;
     public float leapingVelocitySmoothTime = 2f;
     private float inAirTime = 0;
-    public float startLandingHeight = 1f;
-    private Vector3 groundCheckOriginOffset = new Vector3(0f, 0.5f, 0f);
+    public float startLandingHeight = 1.5f;
+    private Vector3 groundCheckOriginOffset = new Vector3(0f, 1f, 0f);
 
     private void Awake()
     {
@@ -142,9 +144,20 @@ public class PlayerLocomotion : MonoBehaviour
         RaycastHit hit;
         if (Physics.SphereCast(transform.position + groundCheckOriginOffset, 0.2f, Vector3.down, out hit, startLandingHeight, groundLayer))
         {
+            HandleStairsAndSlope(hit.point);
             return false;
         }
         return true;
+    }
+
+    private void HandleStairsAndSlope(Vector3 groundHit)
+    {
+        if (isGround)
+        {
+            Vector3 currentPosition = transform.position;
+            currentPosition.y = Mathf.SmoothDamp(currentPosition.y, groundHit.y, ref standVelocitySmoothY, standSmoothTime);
+            transform.position = currentPosition;
+        }
     }
 
     private void HandleFalling()
