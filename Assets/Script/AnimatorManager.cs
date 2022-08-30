@@ -15,6 +15,14 @@ public class AnimatorManager : MonoBehaviour
     public string fallingAnimation = "Falling";
     [HideInInspector]
     public string landingAnimation = "Landing";
+    [HideInInspector]
+    public string idleJumpUpAnimation = "Idle Jumping Up";
+    public float jumpUpDelayTime = 0.33f;
+
+    [HideInInspector]
+    public string runningJumpAnimation = "Running Jump";
+    [HideInInspector]
+    public string runningJumpLandingAnimation = "Running Jump Landing";
 
     private float fadeLength = 0.2f;
 

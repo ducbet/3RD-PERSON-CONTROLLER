@@ -53,8 +53,8 @@ public class CameraManager : MonoBehaviour
 
     private void FollowTarget()
     {
-        Vector3 cameraPosition = Vector3.SmoothDamp(movementPivotTransform.position, target.position, ref currentMovementVelocity, cameraSmoothTime);
-        movementPivotTransform.position = cameraPosition;
+        //Vector3 cameraPosition = Vector3.SmoothDamp(movementPivotTransform.position, target.position, ref currentMovementVelocity, cameraSmoothTime);
+        movementPivotTransform.position = target.position;
     }
 
     private void RotateCamera()
