@@ -26,6 +26,8 @@ public class PlayerLocomotion : MonoBehaviour
     private Vector3 direction;
 
     private bool isInteracting = false;
+    private bool useRootMotion = false;
+    private bool isDodging = false;
     private bool isJumping = false;
     private bool isGround = true;
     private bool isForwardJump = false;  // Do not play landing animatioin if jump forward
@@ -55,6 +57,14 @@ public class PlayerLocomotion : MonoBehaviour
     private void Update()
     {
         isInteracting = animatorManager.GetBool(animatorManager.isInteractingName);
+        useRootMotion = animatorManager.GetBool(animatorManager.useRootMotionName);
+        if (!useRootMotion && isDodging)
+        {
+            isDodging = false; 
+            isGround = true;
+            playerRigidbody.velocity = Vector3.zero;
+            Debug.Log("End isDodging: ");
+        }
     }
 
     public void HandleMovementAnimation()
@@ -66,16 +76,29 @@ public class PlayerLocomotion : MonoBehaviour
     {
         HandleFallingAndLanding();
         HandleJumping();
+        HandleDodging();
+        if (useRootMotion)
+        {
+            if (isDodging)
+            {
+                HandleDodgingRootMotion();
+            }
+            return;
+        }
         if (isInteracting)
         {
             // Do not handle movement, rotation while falling
+            Debug.Log("isInteracting: " + isInteracting);
             return;
         }
         if (isJumping)
         {
             // Do not handle movement, rotation while jumping
+            Debug.Log("isJumping: " + isJumping);
             return;
         }
+        Debug.Log("isDodging: " + isDodging + ", useRootMotion " + useRootMotion + ", velocity " + playerRigidbody.velocity + ", position " + transform.position);
+
         CalculateDirection();
         HandleTranslation();
         HandleRotation();
@@ -92,6 +115,7 @@ public class PlayerLocomotion : MonoBehaviour
     {
         float speed = GetMovementSpeed(GetMovementState());
         playerRigidbody.velocity = direction * speed * Time.deltaTime;
+        Debug.Log("HandleTranslation" + playerRigidbody.velocity);
     }
 
     private void HandleRotation()
@@ -104,6 +128,11 @@ public class PlayerLocomotion : MonoBehaviour
 
     private void HandleFallingAndLanding()
     {
+        if (isDodging)
+        {
+            // ignore all forces while dodging (because I implement dodge different than running jump)
+            return;
+        }
         if (!isGround)
         {
             HandleFallingForces();
@@ -181,7 +210,7 @@ public class PlayerLocomotion : MonoBehaviour
         {
             return;
         }
-        Debug.Log("HandleLanding isGround: " + isGround + ", isInteracting " + isInteracting);
+        //Debug.Log("HandleLanding isGround: " + isGround + ", isInteracting " + isInteracting);
         if (isForwardJump)
         {
             inAirTime = 0;
@@ -208,6 +237,10 @@ public class PlayerLocomotion : MonoBehaviour
         3. isJumping == false and isGround == true -> idle on the ground
         4. isJumping == false and isGround == false -> start falling from the highest point
         */
+        if (isDodging)
+        {
+            return;
+        }
         if (isJumping && isGround)
         {
             // Case 1
@@ -278,6 +311,33 @@ public class PlayerLocomotion : MonoBehaviour
         Debug.Log("isJumping: " + isJumping + ", start velocity: " + playerRigidbody.velocity);
         isGround = false;
         inAirTime = 0;
+    }
+
+    private void HandleDodging()
+    {
+        /*
+        Try to handle dodging different from runningJump
+        Use position from animation as tutorial
+        */
+        
+        if (isJumping || isDodging || !isGround || !inputManager.isDodging)
+        {
+            return;
+        }
+        Debug.Log("HandleDodging");
+        animatorManager.PlayTargetAnimation(animatorManager.dodgingBackAnimation, true, true);
+        isGround = false;
+        isDodging = true;
+    }
+
+    private void HandleDodgingRootMotion()
+    {
+        // still have bug when trasiting from dodging to falling
+        playerRigidbody.drag = 0;  // drag default is 0 too
+        Vector3 deltaPosition = animatorManager.deltaPosition * 2f;
+        deltaPosition.y = 0;
+        Debug.Log("HandleDodgingRootMotion" + deltaPosition);
+        playerRigidbody.velocity = deltaPosition;
     }
 
     private float GetMovementSpeed(MovementState state)
