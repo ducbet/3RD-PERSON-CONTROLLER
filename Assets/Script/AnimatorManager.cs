@@ -12,6 +12,9 @@ public class AnimatorManager : MonoBehaviour
     [HideInInspector]
     public string isInteractingName = "IsInteracting";
     [HideInInspector]
+    public string useRootMotionName = "UseRootMotion";
+    
+    [HideInInspector]
     public string fallingAnimation = "Falling";
     [HideInInspector]
     public string landingAnimation = "Landing";
@@ -24,15 +27,24 @@ public class AnimatorManager : MonoBehaviour
     [HideInInspector]
     public string runningJumpLandingAnimation = "Running Jump Landing";
 
+    [HideInInspector]
+    public string dodgingBackAnimation = "Dodging Back";
+
+    [HideInInspector]
+    public Vector3 deltaPosition = Vector3.zero;
+
     private float fadeLength = 0.2f;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
     }
-    public void PlayTargetAnimation(string animationName, bool isInteracting)
+    public void PlayTargetAnimation(string animationName, bool isInteracting, bool useRootMotion = false)
     {
+        deltaPosition = Vector3.zero;
+
         animator.SetBool(HashString(isInteractingName), isInteracting);
+        animator.SetBool(HashString(useRootMotionName), useRootMotion);
         animator.CrossFade(HashString(animationName), fadeLength);
     }
 
@@ -53,5 +65,13 @@ public class AnimatorManager : MonoBehaviour
     public bool GetBool(string boolName)
     {
         return animator.GetBool(HashString(boolName));
+    }
+
+    private void OnAnimatorMove()
+    {
+        if (GetBool(useRootMotionName))
+        {
+            deltaPosition = animator.deltaPosition / Time.deltaTime;
+        }
     }
 }
